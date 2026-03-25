@@ -1,0 +1,21 @@
+# docker-compose.yml
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - /home/km0425594572/.config/gcloud:/root/.config/gcloud:ro
+    environment:
+      - GOOGLE_CLOUD_PROJECT=recipe-site-491307
+      - GOOGLE_APPLICATION_CREDENTIALS=/root/.config/gcloud/application_default_credentials.json
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
