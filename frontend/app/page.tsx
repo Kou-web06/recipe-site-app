@@ -24,7 +24,7 @@ export default function Home() {
                 onClick = {handleClick}
                 style = {{ padding: '10px 20px', fontSize: '16px' }}
             >
-                FastAPIを叩く！
+                テスト送信！
             </button>
             <p>{message}</p>
         </div>
