@@ -7,11 +7,12 @@ export default function Home() {
 
     const handleClick = async () => {
         try {
-            const response = await fetch('http://localhost:8000/recipe-test');
+            const response = await fetch('http://localhost:8000/recipe-vision-test');
+            console.log(response);
             const data = await response.json();
 
             if(response.status === 200) {
-                setMessage(`成功！ メッセージ：${data.message}`);
+                setMessage(`成功！ メッセージ：${data.recipe}`);
             }
         } catch (error) {
             setMessage(`エラーが発生した！`);
@@ -24,7 +25,7 @@ export default function Home() {
                 onClick = {handleClick}
                 style = {{ padding: '10px 20px', fontSize: '16px' }}
             >
-                テスト送信！
+                テスト送信
             </button>
             <p>{message}</p>
         </div>
