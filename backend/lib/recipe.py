@@ -9,8 +9,7 @@ LOCATION = "us-central1"
 vertexai.init(project=PROJECT_ID, location=LOCATION)
 
 def generate_recipe_from_text(ingredients: str):
-    # Gemini 2.5 Flash を使用（高速で安い！）
-    model = GenerativeModel("gemini-2.5-flash")
+    model = GenerativeModel("gemini-3.1-flash-lite-preview")
     
     prompt = f"""
         以下の食材を使って、美味しい料理のレシピを1つ提案してください。

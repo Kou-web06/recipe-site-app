@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, File, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from lib.recipe import generate_recipe_from_text
 from lib.recipe import generate_recipe_from_image
@@ -21,15 +21,25 @@ app.add_middleware(
 #     recipe = generate_recipe_from_text(fixed_ingredients)
 #     return {"status": "success", "recipe": recipe}
 
-@app.get("/recipe-vision-test")
-def get_vision_recipe():
-    image_path = "test_ingredients.jpg"
+# @app.get("/recipe-vision-test")
+# def get_vision_recipe():
+#     image_path = "test_ingredients.jpg"
 
-    if not os.path.exists(image_path):
-        return {"error": "画像が見つかりません。"}
+#     if not os.path.exists(image_path):
+#         return {"error": "画像が見つかりません。"}
     
-    with open(image_path, "rb") as f:
-        image_bytes = f.read()
+#     with open(image_path, "rb") as f:
+#         image_bytes = f.read()
     
-    recipe = generate_recipe_from_image(image_bytes)
-    return {"recipe": recipe}
+#     recipe = generate_recipe_from_image(image_bytes)
+#     return {"recipe": recipe}
+
+@app.post("/upload-recipe")
+async def upload_recipe(file: UploadFile = File(...)):
+    # 送られた画像をメモリへ保存
+    image_bytes = await file.read()
+
+    # Vision呼び出し
+    recipe = generate_recipe_from_image(image_bytes, mime_type=file.content_type)
+
+    return {"status": "success", "recipe": recipe}
