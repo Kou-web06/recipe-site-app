@@ -1,6 +1,8 @@
 'use client';
 import React, { useState } from 'react';
 
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+
 export default function Home() {
     const [message, setMessage] = useState('↑画像を選ぶ');
     const [loading, setLoading] = useState(false);
@@ -16,15 +18,20 @@ export default function Home() {
         formData.append('file', file);
 
         try {
-            const response = await fetch('http://localhost:8000/upload-recipe', {
+            const response = await fetch(`${API_BASE_URL}/upload-recipe`, {
                 method: 'POST',
                 body: formData,
             });
-            console.log(response);
+
+            if (!response.ok) {
+                throw new Error(`API request failed: ${response.status}`);
+            }
+
             const data = await response.json();
             setMessage(data.recipe || "レシピが見つかりませんでした");
         } catch (error) {
-            setMessage(`エラーが発生した！`);
+            console.error(error);
+            setMessage('アップロードに失敗しました。しばらくしてから再試行してください。');
         } finally {
             setLoading(false);
         }
