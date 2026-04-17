@@ -7,11 +7,13 @@ services:
     volumes:
       - /home/km0425594572/.config/gcloud:/root/.config/gcloud:ro
     environment:
+      - PORT=8000
       - GOOGLE_CLOUD_PROJECT=recipe-site-491307
       - GOOGLE_APPLICATION_CREDENTIALS=/root/.config/gcloud/application_default_credentials.json
 
   frontend:
     build: ./frontend
+    command: sh -c "npm install && npm run dev -- -H 0.0.0.0 -p 3000"
     ports:
       - "3000:3000"
     volumes:
@@ -19,3 +21,4 @@ services:
       - /app/node_modules
     environment:
       - NODE_ENV=development
+      - NEXT_PUBLIC_API_URL=http://localhost:8000

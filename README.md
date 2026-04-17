@@ -1,5 +1,19 @@
 # recipeSite
 
+## Local Development (Docker Compose)
+
+Run both frontend and backend locally:
+
+```bash
+docker compose up --build
+```
+
+- Frontend: `http://localhost:3000`
+- Backend: `http://localhost:8000`
+
+The frontend uses `NEXT_PUBLIC_API_URL=http://localhost:8000` in `docker-compose.yml`.
+The backend listens on `PORT=8000` locally, while Cloud Run still injects `PORT` automatically.
+
 ## Cloud Build
 
 This repository has separate Dockerfiles for backend and frontend.

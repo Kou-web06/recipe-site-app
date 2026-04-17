@@ -9,5 +9,5 @@ RUN pip install --no-cache-dir -r requirements.txt
 # ソースコードをコピー
 COPY . .
 
-# FastAPIを起動
-CMD ["sh", "-c", "uvicorn main:app --host 0.0.0.0 --port ${PORT:-8080}"]
+# FastAPIを起動（Cloud RunではPORTが注入され、ローカルでは8000を使う）
+CMD ["sh", "-c", "uvicorn main:app --host 0.0.0.0 --port ${PORT:-8000}"]
