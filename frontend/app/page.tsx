@@ -126,6 +126,7 @@ function tryParseJson(value: string): unknown {
 }
 
 export default function Home() {
+    
     const [recipe, setRecipe] = useState<Recipe | null>(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
