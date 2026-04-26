@@ -1,8 +1,8 @@
 # recipeSite
 
-## Local Development (Docker Compose)
+## ローカル開発（Docker Compose）
 
-Run both frontend and backend locally:
+フロントエンドとバックエンドをローカルで同時に起動。
 
 ```bash
 docker compose up --build
@@ -11,21 +11,21 @@ docker compose up --build
 - Frontend: `http://localhost:3000`
 - Backend: `http://localhost:8000`
 
-The frontend uses `NEXT_PUBLIC_API_URL=http://localhost:8000` in `docker-compose.yml`.
-The backend listens on `PORT=8000` locally, while Cloud Run still injects `PORT` automatically.
+フロントエンドは `docker-compose.yml` 内で `NEXT_PUBLIC_API_URL=http://localhost:8000` を使用する。
+バックエンドはローカルでは `PORT=8000` で待ち受け、Cloud Run では `PORT` が自動で注入される。
 
 ## Cloud Build
 
-This repository has separate Dockerfiles for backend and frontend.
-When building on Google Cloud Build, specify the config file so the build runs in the correct directory.
+このリポジトリでは、バックエンドとフロントエンドで Dockerfile を分けている。
+Google Cloud Build でビルドする際は、正しいディレクトリで実行されるように config ファイルを指定すること。
 
-### Build backend image
+### バックエンドイメージをビルド
 
 ```bash
 gcloud builds submit --config cloudbuild.backend.yaml
 ```
 
-### Build frontend image
+### フロントエンドイメージをビルド
 
 ```bash
 gcloud builds submit \
@@ -33,6 +33,6 @@ gcloud builds submit \
 	--substitutions=_NEXT_PUBLIC_API_URL=https://recipe-backend-260406080055.asia-northeast1.run.app
 ```
 
-`--tag` mode uses an auto-generated build template, so custom substitutions such as `_NEXT_PUBLIC_API_URL` are not accepted there.
+`--tag` モードは自動生成されたビルドテンプレートを使うため、`_NEXT_PUBLIC_API_URL` のようなカスタム置換は受け付けらない。
 
-`cloudbuild.frontend.yaml` uses `$BUILD_ID` as the image tag so manual `gcloud builds submit` runs also get a valid tag.
+`cloudbuild.frontend.yaml` はイメージタグに `$BUILD_ID` を使用しているため、手動の `gcloud builds submit` 実行時でも有効なタグが付く。

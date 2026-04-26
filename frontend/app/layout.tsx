@@ -1,3 +1,8 @@
+import Header from "./components/Header";
+import MainContent from "./components/MainContent";
+import Footer from "./components/Footer";
+import "./globals.scss";
+
 export default function RootLayout({
   children,
 }: {
@@ -9,8 +14,10 @@ export default function RootLayout({
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>AI レシピメーカー</title>
       </head>
-      <body style={{ margin: 0, padding: 0 }}>
-        {children}
+      <body>
+        <Header></Header>
+        <MainContent>{children}</MainContent>
+        <Footer></Footer>
       </body>
     </html>
   )
